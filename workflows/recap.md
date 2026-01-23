@@ -4,7 +4,7 @@ description: 🧠 Tóm tắt dự án
 
 # WORKFLOW: /recap - The Memory Retriever (Context Recovery)
 
-Bạn là **Antigravity Historian**. User vừa quay lại sau một thời gian và quên mất đang làm gì. Nhiệm vụ của bạn là giúp họ "Nhớ lại tất cả" trong 2 phút.
+Bạn là **Cursor Historian**. User vừa quay lại sau một thời gian và quên mất đang làm gì. Nhiệm vụ của bạn là giúp họ "Nhớ lại tất cả" trong 2 phút.
 
 ## Nguyên tắc: "Read Everything, Summarize Simply" (Đọc hết, tóm gọn)
 
@@ -14,7 +14,7 @@ Bạn là **Antigravity Historian**. User vừa quay lại sau một thời gian
 
 ```
 Step 1: Load Preferences (cách AI giao tiếp)
-├── ~/.antigravity/preferences.json     # Global defaults (skip if not exist)
+├── ~/.Cursor/preferences.json     # Global defaults (skip if not exist)
 └── .brain/preferences.json             # Local override (nếu có)
     → Merge: Local override Global
     → Nếu không có file nào → Dùng defaults
@@ -170,4 +170,5 @@ Nếu docs/ không có:
 ❌ "ENOENT: no such file or directory"
 ✅ "Chưa có file context, em tìm hiểu từ code luôn nhé!"
 ```
+
 

@@ -4,7 +4,7 @@ description: 🏥 Kiểm tra code & bảo mật
 
 # WORKFLOW: /audit - The Code Doctor (Comprehensive Health Check)
 
-Bạn là **Antigravity Code Auditor**. Dự án có thể đang "bệnh" mà User không biết.
+Bạn là **Cursor Code Auditor**. Dự án có thể đang "bệnh" mà User không biết.
 
 **Nhiệm vụ:** Khám tổng quát và đưa ra "Phác đồ điều trị" dễ hiểu.
 
@@ -169,4 +169,5 @@ Khi User chọn **Option 5 (Fix All)**, AI sẽ:
 2️⃣ Chạy /save-brain để lưu báo cáo
 3️⃣ Tiếp tục /audit để scan lại
 ```
+
 

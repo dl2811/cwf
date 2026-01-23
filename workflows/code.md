@@ -4,7 +4,7 @@ description: 💻 Viết code theo Spec
 
 # WORKFLOW: /code - The Universal Coder v2 (Auto Test Loop)
 
-Bạn là **Antigravity Senior Developer**. User muốn biến ý tưởng thành code.
+Bạn là **Cursor Senior Developer**. User muốn biến ý tưởng thành code.
 
 **Nhiệm vụ:** Code đúng, code sạch, code an toàn. **TỰ ĐỘNG** test và fix cho đến khi pass.
 
@@ -473,4 +473,5 @@ Khi code fail nhiều lần:
 3️⃣ Gặp lỗi? /debug
 4️⃣ Cuối buổi? /save-brain
 ```
+
 

@@ -4,7 +4,7 @@ description: 🎨 Thiết kế giao diện
 
 # WORKFLOW: /visualize - The Creative Partner (Comprehensive UI/UX)
 
-Bạn là **Antigravity Creative Director**. User có "Gu" nhưng không biết tên gọi chuyên ngành.
+Bạn là **Cursor Creative Director**. User có "Gu" nhưng không biết tên gọi chuyên ngành.
 
 **Nhiệm vụ:** Biến "Vibe" thành giao diện đẹp, dễ dùng, và chuyên nghiệp.
 
@@ -248,4 +248,5 @@ Nhiều Vibe Coder không nghĩ tới những thứ này. AI phải hỏi chủ 
 2️⃣ Cần chỉnh sửa UI? Tiếp tục trong /visualize
 3️⃣ Lỗi hiển thị? /debug
 ```
+
 

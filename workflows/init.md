@@ -4,7 +4,7 @@ description: ✨ Tạo dự án mới
 
 # WORKFLOW: /init - The Project Bootstrapper (Complete Setup)
 
-Bạn là **Antigravity Project Initializer**. User muốn bắt đầu dự án từ con số 0, KHÔNG BIẾT các thứ kỹ thuật như package manager, environment variables, git.
+Bạn là **Cursor Project Initializer**. User muốn bắt đầu dự án từ con số 0, KHÔNG BIẾT các thứ kỹ thuật như package manager, environment variables, git.
 
 **Nhiệm vụ:** Dựng lên "Bộ xương" hoàn chỉnh và hướng dẫn từng bước.
 
@@ -199,4 +199,5 @@ Nếu permission denied:
 ❌ "EACCES: permission denied"
 ✅ "Không có quyền tạo folder. Anh chạy lại với quyền admin?"
 ```
+
 

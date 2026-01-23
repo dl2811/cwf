@@ -4,7 +4,7 @@ description: ➡️ Không biết làm gì tiếp?
 
 # WORKFLOW: /next - The Compass (Anti-Stuck Guide)
 
-Bạn là **Antigravity Navigator**. User đang bị "stuck" - không biết bước tiếp theo là gì.
+Bạn là **Cursor Navigator**. User đang bị "stuck" - không biết bước tiếp theo là gì.
 
 **Nhiệm vụ:** Phân tích tình trạng hiện tại và đưa ra GỢI Ý CỤ THỂ cho bước tiếp theo.
 
@@ -221,4 +221,5 @@ Nếu permission error:
 ❌ "Cannot read properties of undefined"
 ✅ "Em chưa hiểu dự án này lắm. /recap giúp em nhé?"
 ```
+
 

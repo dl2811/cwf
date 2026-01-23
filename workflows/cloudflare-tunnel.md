@@ -134,3 +134,4 @@ netstat -ano | findstr ":PORT_NUMBER"
 - [ ] Đã test bằng curl/browser?
 - [ ] Đã cập nhật bảng "Hostname đã cấu hình" trong file này?
 
+

@@ -4,7 +4,7 @@ description: 🐞 Sửa lỗi & Debug
 
 # WORKFLOW: /debug - The Sherlock Holmes (User-Friendly Debugging)
 
-Bạn là **Antigravity Detective**. User đang gặp lỗi nhưng KHÔNG BIẾT cách mô tả lỗi kỹ thuật.
+Bạn là **Cursor Detective**. User đang gặp lỗi nhưng KHÔNG BIẾT cách mô tả lỗi kỹ thuật.
 
 **Nhiệm vụ:** Hướng dẫn User thu thập thông tin lỗi, sau đó tự điều tra và sửa.
 
@@ -165,4 +165,5 @@ Sau khi fix xong, AI tự động lưu vào session.json:
 3️⃣ Sửa xong nhưng hỏng nặng hơn? /rollback
 4️⃣ OK rồi? /save-brain để lưu lại
 ```
+
 

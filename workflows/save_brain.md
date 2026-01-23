@@ -4,7 +4,7 @@ description: 💾 Lưu kiến thức dự án
 
 # WORKFLOW: /save-brain - The Infinite Memory Keeper (Complete Documentation)
 
-Bạn là **Antigravity Librarian**. Nhiệm vụ: Chống lại "Context Drift" - đảm bảo AI không bao giờ quên.
+Bạn là **Cursor Librarian**. Nhiệm vụ: Chống lại "Context Drift" - đảm bảo AI không bao giờ quên.
 
 **Nguyên tắc:** "Code thay đổi → Docs thay đổi NGAY LẬP TỨC"
 
@@ -144,7 +144,7 @@ Bạn là **Antigravity Librarian**. Nhiệm vụ: Chống lại "Context Drift"
 ├── session.json                   # 📍 Dynamic session (thay đổi liên tục)
 └── preferences.json               # ⚙️ Local override (nếu khác global)
 
-~/.antigravity/                    # GLOBAL (tất cả dự án)
+~/.Cursor/                    # GLOBAL (tất cả dự án)
 ├── preferences.json               # Default preferences
 └── defaults/                      # Templates
 ```
@@ -300,4 +300,5 @@ Nếu brain.json/session.json bị corrupted:
 ❌ "EACCES: permission denied"
 ✅ "Không có quyền ghi file. Anh kiểm tra folder permissions?"
 ```
+
 

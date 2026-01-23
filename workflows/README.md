@@ -1,4 +1,4 @@
-﻿# 🚀 Antigravity Vibe Coding Suite v3.4 (Ultimate Edition)
+﻿# 🚀 Cursor Vibe Coding Suite v3.4 (Ultimate Edition)
 
 **Hệ thống Workflow TOÀN DIỆN cho Vibe Coders** - Chỉ cần có ý tưởng, AI lo trọn gói.
 
@@ -170,7 +170,7 @@ Sau mỗi phase/5 tasks:
 ├── session.json                   # 📍 Dynamic session (thay đổi liên tục)
 └── preferences.json               # ⚙️ Local override (nếu khác global)
 
-~/.antigravity/                    # GLOBAL (tất cả dự án)
+~/.Cursor/                    # GLOBAL (tất cả dự án)
 ├── preferences.json               # Default AI preferences
 └── defaults/                      # Templates
 ```
@@ -336,5 +336,6 @@ AI hỏi bằng tiếng Việt:
 
 ---
 
-*Antigravity Vibe Coding Suite v3.4 - Your dreams, our engineering.*
+*Cursor Vibe Coding Suite v3.4 - Your dreams, our engineering.*
+
 
