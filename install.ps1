@@ -1,6 +1,5 @@
-# CWF - Cursor Workflow Framework (Fork of AWF)
-# Converted for Cursor IDE compatibility
-# Original: https://github.com/TUAN130294/awf
+# CWF - Cursor Workflow Framework
+# Cài đặt Global + Tạo script cwf-init để kích hoạt trong mỗi project
 
 $RepoBase = "https://raw.githubusercontent.com/dl2811/cwf/main"
 $RepoUrl = "$RepoBase/workflows"
@@ -9,7 +8,7 @@ $Workflows = @(
     "debug.md", "refactor.md", "test.md", "run.md",
     "init.md", "recap.md", "rollback.md", "save_brain.md",
     "audit.md", "cloudflare-tunnel.md", "cwf-update.md",
-    "brainstorm.md", "next.md", "customize.md", "README.md"
+    "brainstorm.md", "next.md", "customize.md"
 )
 
 # Schemas and Templates (v3.3+)
@@ -20,24 +19,25 @@ $Templates = @(
     "brain.example.json", "session.example.json", "preferences.example.json"
 )
 
-# Detect Cursor Global Path
-$CursorGlobal = "$env:USERPROFILE\.cursor\rules\cwf"
-$SchemasDir = "$env:USERPROFILE\.cursor\schemas"
-$TemplatesDir = "$env:USERPROFILE\.cursor\templates"
-$CursorRulesDir = "$env:USERPROFILE\.cursor\rules"
+# Paths
+$CwfGlobal = "$env:USERPROFILE\.cursor\cwf"
+$SchemasDir = "$env:USERPROFILE\.cursor\cwf\schemas"
+$TemplatesDir = "$env:USERPROFILE\.cursor\cwf\templates"
+$WorkflowsDir = "$env:USERPROFILE\.cursor\cwf\workflows"
 $CwfVersionFile = "$env:USERPROFILE\.cursor\cwf_version"
 
 # Get version from repo
 try {
     $CurrentVersion = (Invoke-WebRequest -Uri "$RepoBase/VERSION" -UseBasicParsing).Content.Trim()
-} catch {
+}
+catch {
     $CurrentVersion = "1.0.0"
 }
 
 Write-Host ""
 Write-Host "╔══════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
 Write-Host "║     🚀 CWF - Cursor Workflow Framework v$CurrentVersion          ║" -ForegroundColor Cyan
-Write-Host "║     (Fork of AWF for Cursor IDE)                         ║" -ForegroundColor Cyan
+Write-Host "║     (Optimized for Cursor IDE)                          ║" -ForegroundColor Cyan
 Write-Host "╚══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
@@ -49,136 +49,187 @@ if (Test-Path $CwfVersionFile) {
     Write-Host ""
 }
 
-# 1. Cài Global Workflows
-if (-not (Test-Path $CursorGlobal)) {
-    New-Item -ItemType Directory -Force -Path $CursorGlobal | Out-Null
-    Write-Host "📂 Đã tạo thư mục Global: $CursorGlobal" -ForegroundColor Green
-} else {
-    Write-Host "✅ Tìm thấy Cursor Global: $CursorGlobal" -ForegroundColor Green
-}
+# 1. Create directories
+Write-Host "📂 Bước 1: Tạo thư mục..." -ForegroundColor Cyan
+New-Item -ItemType Directory -Force -Path $CwfGlobal | Out-Null
+New-Item -ItemType Directory -Force -Path $SchemasDir | Out-Null
+New-Item -ItemType Directory -Force -Path $TemplatesDir | Out-Null
+New-Item -ItemType Directory -Force -Path $WorkflowsDir | Out-Null
+Write-Host "   ✅ Đã tạo: $CwfGlobal" -ForegroundColor Green
 
-Write-Host "⏳ Đang tải workflows..." -ForegroundColor Cyan
+# 2. Download workflows
+Write-Host ""
+Write-Host "⏳ Bước 2: Đang tải workflows..." -ForegroundColor Cyan
 $success = 0
 foreach ($wf in $Workflows) {
     try {
-        Invoke-WebRequest -Uri "$RepoUrl/$wf" -OutFile "$CursorGlobal\$wf" -ErrorAction Stop
+        Invoke-WebRequest -Uri "$RepoUrl/$wf" -OutFile "$WorkflowsDir\$wf" -ErrorAction Stop
         Write-Host "   ✅ $wf" -ForegroundColor Green
         $success++
-    } catch {
+    }
+    catch {
         Write-Host "   ❌ $wf" -ForegroundColor Red
     }
 }
 
-# 2. Download Schemas (v3.3+)
-if (-not (Test-Path $SchemasDir)) {
-    New-Item -ItemType Directory -Force -Path $SchemasDir | Out-Null
-}
-Write-Host "⏳ Đang tải schemas..." -ForegroundColor Cyan
+# 3. Download Schemas
+Write-Host ""
+Write-Host "⏳ Bước 3: Đang tải schemas..." -ForegroundColor Cyan
 foreach ($schema in $Schemas) {
     try {
         Invoke-WebRequest -Uri "$RepoBase/schemas/$schema" -OutFile "$SchemasDir\$schema" -ErrorAction Stop
         Write-Host "   ✅ $schema" -ForegroundColor Green
         $success++
-    } catch {
+    }
+    catch {
         Write-Host "   ❌ $schema" -ForegroundColor Red
     }
 }
 
-# 3. Download Templates (v3.3+)
-if (-not (Test-Path $TemplatesDir)) {
-    New-Item -ItemType Directory -Force -Path $TemplatesDir | Out-Null
-}
-Write-Host "⏳ Đang tải templates..." -ForegroundColor Cyan
+# 4. Download Templates
+Write-Host ""
+Write-Host "⏳ Bước 4: Đang tải templates..." -ForegroundColor Cyan
 foreach ($template in $Templates) {
     try {
         Invoke-WebRequest -Uri "$RepoBase/templates/$template" -OutFile "$TemplatesDir\$template" -ErrorAction Stop
         Write-Host "   ✅ $template" -ForegroundColor Green
         $success++
-    } catch {
+    }
+    catch {
         Write-Host "   ❌ $template" -ForegroundColor Red
     }
 }
 
-# 4. Save version
-if (-not (Test-Path "$env:USERPROFILE\.cursor")) {
-    New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor" | Out-Null
-}
+# 5. Save version
 Set-Content -Path $CwfVersionFile -Value $CurrentVersion -Encoding UTF8
+Write-Host ""
 Write-Host "✅ Đã lưu version: $CurrentVersion" -ForegroundColor Green
 
-# 5. Create Global Rules file (.mdc format for Cursor)
-$CwfInstructions = @"
----
-description: CWF - Cursor Workflow Framework
-globs: 
-alwaysApply: true
----
+# 6. Create cwf-init.ps1 script (for activating CWF in each project)
+Write-Host ""
+Write-Host "🔧 Bước 5: Tạo script cwf-init..." -ForegroundColor Cyan
 
+$CwfInitScript = @'
+# CWF Init - Kích hoạt CWF trong project hiện tại
+# Chạy 1 lần trong mỗi project mới
+
+$CwfGlobal = "$env:USERPROFILE\.cursor\cwf\workflows"
+$ProjectRules = ".\.cursor\rules"
+
+Write-Host ""
+Write-Host "🚀 CWF Init - Kích hoạt workflows cho project này" -ForegroundColor Cyan
+Write-Host ""
+
+# Check if CWF is installed
+if (-not (Test-Path $CwfGlobal)) {
+    Write-Host "❌ CWF chưa được cài đặt. Chạy install.ps1 trước!" -ForegroundColor Red
+    exit 1
+}
+
+# Create .cursor/rules folder
+if (-not (Test-Path $ProjectRules)) {
+    New-Item -ItemType Directory -Force -Path $ProjectRules | Out-Null
+    Write-Host "📂 Đã tạo: $ProjectRules" -ForegroundColor Green
+}
+
+# Copy workflows to project
+Write-Host "📝 Đang copy workflows..." -ForegroundColor Cyan
+$copied = 0
+Get-ChildItem -Path $CwfGlobal -Filter "*.md" | ForEach-Object {
+    Copy-Item $_.FullName -Destination $ProjectRules -Force
+    Write-Host "   ✅ $($_.Name)" -ForegroundColor Green
+    $copied++
+}
+
+# Create main .cursorrules file with command mapping
+$CursorRules = @"
 # CWF - Cursor Workflow Framework
 
-## CRITICAL: Command Recognition
-Khi user gõ các lệnh bắt đầu bằng ``/`` dưới đây, đây là CWF WORKFLOW COMMANDS (không phải file path).
-Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng dẫn trong đó.
+Bạn có quyền truy cập các workflows trong thư mục .cursor/rules/
+Khi user gõ lệnh bắt đầu bằng /, hãy đọc file workflow tương ứng và thực hiện.
 
-## Command Mapping (QUAN TRỌNG):
-| Command | Workflow File | Mô tả |
-|---------|--------------|-------|
-| ``/brainstorm`` | ~/.cursor/rules/cwf/brainstorm.md | 💡 Bàn ý tưởng, research thị trường |
-| ``/plan`` | ~/.cursor/rules/cwf/plan.md | Thiết kế tính năng |
-| ``/code`` | ~/.cursor/rules/cwf/code.md | Viết code an toàn |
-| ``/visualize`` | ~/.cursor/rules/cwf/visualize.md | Tạo UI/UX |
-| ``/debug`` | ~/.cursor/rules/cwf/debug.md | Sửa lỗi sâu |
-| ``/test`` | ~/.cursor/rules/cwf/test.md | Kiểm thử |
-| ``/run`` | ~/.cursor/rules/cwf/run.md | Chạy ứng dụng |
-| ``/deploy`` | ~/.cursor/rules/cwf/deploy.md | Deploy production |
-| ``/init`` | ~/.cursor/rules/cwf/init.md | Khởi tạo dự án |
-| ``/recap`` | ~/.cursor/rules/cwf/recap.md | Khôi phục ngữ cảnh |
-| ``/next`` | ~/.cursor/rules/cwf/next.md | Gợi ý bước tiếp theo |
-| ``/customize`` | ~/.cursor/rules/cwf/customize.md | ⚙️ Cá nhân hóa AI |
-| ``/save-brain`` | ~/.cursor/rules/cwf/save_brain.md | Lưu kiến thức |
-| ``/audit`` | ~/.cursor/rules/cwf/audit.md | Kiểm tra bảo mật |
-| ``/refactor`` | ~/.cursor/rules/cwf/refactor.md | Tái cấu trúc code |
-| ``/rollback`` | ~/.cursor/rules/cwf/rollback.md | Rollback deployment |
-| ``/cloudflare-tunnel`` | ~/.cursor/rules/cwf/cloudflare-tunnel.md | Quản lý tunnel |
-| ``/cwf-update`` | ~/.cursor/rules/cwf/cwf-update.md | Cập nhật CWF |
+## Command Mapping:
+| Lệnh | File |
+|------|------|
+| /brainstorm | @brainstorm.md |
+| /plan | @plan.md |
+| /code | @code.md |
+| /visualize | @visualize.md |
+| /debug | @debug.md |
+| /test | @test.md |
+| /run | @run.md |
+| /deploy | @deploy.md |
+| /init | @init.md |
+| /recap | @recap.md |
+| /next | @next.md |
+| /save-brain | @save_brain.md |
+| /audit | @audit.md |
+| /refactor | @refactor.md |
+| /rollback | @rollback.md |
+| /customize | @customize.md |
+| /cwf-update | @cwf-update.md |
 
-## Resource Locations (v3.3+):
-- Schemas: ~/.cursor/schemas/
-- Templates: ~/.cursor/templates/
-
-## Hướng dẫn thực hiện:
-1. Khi user gõ một trong các commands trên, ĐỌC FILE WORKFLOW tương ứng
-2. Thực hiện TỪNG GIAI ĐOẠN trong workflow
-3. KHÔNG tự ý bỏ qua bước nào
-4. Kết thúc bằng NEXT STEPS menu như trong workflow
-
-## Update Check:
-- CWF version được lưu tại: ~/.cursor/cwf_version
-- Để kiểm tra và cập nhật CWF, user gõ: /cwf-update
-- Thỉnh thoảng (1 lần/tuần) nhắc user kiểm tra update nếu họ dùng CWF thường xuyên
+## Cách thực hiện:
+1. Khi user gõ /command, tìm file tương ứng trong .cursor/rules/
+2. Đọc và thực hiện TỪNG BƯỚC trong workflow
+3. Không bỏ qua bước nào
 "@
 
-$CwfRulesFile = "$CursorRulesDir\cwf-global.mdc"
-if (-not (Test-Path $CursorRulesDir)) {
-    New-Item -ItemType Directory -Force -Path $CursorRulesDir | Out-Null
-}
-Set-Content -Path $CwfRulesFile -Value $CwfInstructions -Encoding UTF8
-Write-Host "✅ Đã tạo Global Rules (cwf-global.mdc)" -ForegroundColor Green
+Set-Content -Path ".\.cursorrules" -Value $CursorRules -Encoding UTF8
+Write-Host ""
+Write-Host "✅ Đã tạo .cursorrules" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
-Write-Host "🎉 HOÀN TẤT! Đã cài $success files vào hệ thống." -ForegroundColor Yellow
+Write-Host "🎉 HOÀN TẤT! Đã kích hoạt CWF cho project này." -ForegroundColor Yellow
+Write-Host ""
+Write-Host "📂 Workflows: $ProjectRules ($copied files)" -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "👉 Restart Cursor và thử gõ: /plan hoặc /brainstorm" -ForegroundColor Cyan
+Write-Host "👉 Hoặc dùng @ để reference: @plan.md" -ForegroundColor White
+Write-Host ""
+'@
+
+Set-Content -Path "$CwfGlobal\cwf-init.ps1" -Value $CwfInitScript -Encoding UTF8
+Write-Host "   ✅ cwf-init.ps1" -ForegroundColor Green
+
+# 7. Add cwf-init to PATH or create alias
+Write-Host ""
+Write-Host "🔧 Bước 6: Tạo lệnh cwf-init..." -ForegroundColor Cyan
+
+# Create a batch file wrapper for easy access
+$CwfInitBat = @"
+@echo off
+powershell -ExecutionPolicy Bypass -File "%USERPROFILE%\.cursor\cwf\cwf-init.ps1" %*
+"@
+Set-Content -Path "$env:USERPROFILE\.cursor\cwf\cwf-init.bat" -Value $CwfInitBat -Encoding ASCII
+
+# Add to PATH if not already there
+$cwfPath = "$env:USERPROFILE\.cursor\cwf"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($currentPath -notlike "*$cwfPath*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$cwfPath", "User")
+    Write-Host "   ✅ Đã thêm vào PATH" -ForegroundColor Green
+}
+else {
+    Write-Host "   ✅ Đã có trong PATH" -ForegroundColor Green
+}
+
+Write-Host ""
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
+Write-Host "🎉 CÀI ĐẶT HOÀN TẤT!" -ForegroundColor Yellow
 Write-Host "📦 Version: $CurrentVersion" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📂 Workflows: $CursorGlobal" -ForegroundColor DarkGray
-Write-Host "📂 Schemas:   $SchemasDir" -ForegroundColor DarkGray
-Write-Host "📂 Templates: $TemplatesDir" -ForegroundColor DarkGray
-Write-Host "📂 Rules:     $CwfRulesFile" -ForegroundColor DarkGray
+Write-Host "📂 CWF Global: $CwfGlobal" -ForegroundColor DarkGray
 Write-Host ""
-Write-Host "👉 Bạn có thể dùng CWF ở BẤT KỲ project nào ngay lập tức!" -ForegroundColor Cyan
-Write-Host "👉 Thử gõ '/plan' để kiểm tra." -ForegroundColor White
-Write-Host "👉 Kiểm tra update: '/cwf-update'" -ForegroundColor White
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "👉 BƯỚC TIẾP THEO:" -ForegroundColor Cyan
+Write-Host "   1. Mở CMD/PowerShell MỚI (để nhận PATH)" -ForegroundColor White
+Write-Host "   2. cd vào project của bạn" -ForegroundColor White
+Write-Host "   3. Chạy: cwf-init" -ForegroundColor Yellow
+Write-Host "   4. Restart Cursor" -ForegroundColor White
+Write-Host "   5. Dùng: /plan, /code, /brainstorm, ..." -ForegroundColor White
 Write-Host ""
 
-# Exit cleanly
 exit 0

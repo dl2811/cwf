@@ -1,7 +1,6 @@
 #!/bin/bash
-# CWF - Cursor Workflow Framework (Fork of AWF)
-# Converted for Cursor IDE compatibility
-# Original: https://github.com/TUAN130294/awf
+# CWF - Cursor Workflow Framework
+# Cài đặt Global + Tạo script cwf-init để kích hoạt trong mỗi project
 
 REPO_BASE="https://raw.githubusercontent.com/dl2811/cwf/main"
 REPO_URL="$REPO_BASE/workflows"
@@ -11,26 +10,26 @@ WORKFLOWS=(
     "debug.md" "refactor.md" "test.md" "run.md"
     "init.md" "recap.md" "rollback.md" "save_brain.md"
     "audit.md" "cloudflare-tunnel.md" "cwf-update.md"
-    "brainstorm.md" "next.md" "customize.md" "README.md"
+    "brainstorm.md" "next.md" "customize.md"
 )
 
 SCHEMAS=("brain.schema.json" "session.schema.json" "preferences.schema.json")
 TEMPLATES=("brain.example.json" "session.example.json" "preferences.example.json")
 
-# Cursor paths
-CURSOR_GLOBAL="$HOME/.cursor/rules/cwf"
-SCHEMAS_DIR="$HOME/.cursor/schemas"
-TEMPLATES_DIR="$HOME/.cursor/templates"
-CURSOR_RULES_DIR="$HOME/.cursor/rules"
+# Paths
+CWF_GLOBAL="$HOME/.cursor/cwf"
+SCHEMAS_DIR="$HOME/.cursor/cwf/schemas"
+TEMPLATES_DIR="$HOME/.cursor/cwf/templates"
+WORKFLOWS_DIR="$HOME/.cursor/cwf/workflows"
 CWF_VERSION_FILE="$HOME/.cursor/cwf_version"
 
-# Get version from repo
+# Get version
 CURRENT_VERSION=$(curl -sL "$REPO_BASE/VERSION" 2>/dev/null || echo "1.0.0")
 
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
 echo "║     🚀 CWF - Cursor Workflow Framework v$CURRENT_VERSION          ║"
-echo "║     (Fork of AWF for Cursor IDE)                         ║"
+echo "║     (Optimized for Cursor IDE)                          ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -43,19 +42,19 @@ if [ -f "$CWF_VERSION_FILE" ]; then
 fi
 
 # 1. Create directories
-mkdir -p "$CURSOR_GLOBAL"
+echo "📂 Bước 1: Tạo thư mục..."
+mkdir -p "$CWF_GLOBAL"
 mkdir -p "$SCHEMAS_DIR"
 mkdir -p "$TEMPLATES_DIR"
-mkdir -p "$CURSOR_RULES_DIR"
-
-echo "📂 Cursor Global: $CURSOR_GLOBAL"
-echo ""
+mkdir -p "$WORKFLOWS_DIR"
+echo "   ✅ Đã tạo: $CWF_GLOBAL"
 
 # 2. Download workflows
-echo "⏳ Đang tải workflows..."
+echo ""
+echo "⏳ Bước 2: Đang tải workflows..."
 success=0
 for wf in "${WORKFLOWS[@]}"; do
-    if curl -sL "$REPO_URL/$wf" -o "$CURSOR_GLOBAL/$wf" 2>/dev/null; then
+    if curl -sL "$REPO_URL/$wf" -o "$WORKFLOWS_DIR/$wf" 2>/dev/null; then
         echo "   ✅ $wf"
         ((success++))
     else
@@ -64,7 +63,8 @@ for wf in "${WORKFLOWS[@]}"; do
 done
 
 # 3. Download schemas
-echo "⏳ Đang tải schemas..."
+echo ""
+echo "⏳ Bước 3: Đang tải schemas..."
 for schema in "${SCHEMAS[@]}"; do
     if curl -sL "$REPO_BASE/schemas/$schema" -o "$SCHEMAS_DIR/$schema" 2>/dev/null; then
         echo "   ✅ $schema"
@@ -75,7 +75,8 @@ for schema in "${SCHEMAS[@]}"; do
 done
 
 # 4. Download templates
-echo "⏳ Đang tải templates..."
+echo ""
+echo "⏳ Bước 4: Đang tải templates..."
 for template in "${TEMPLATES[@]}"; do
     if curl -sL "$REPO_BASE/templates/$template" -o "$TEMPLATES_DIR/$template" 2>/dev/null; then
         echo "   ✅ $template"
@@ -87,71 +88,132 @@ done
 
 # 5. Save version
 echo "$CURRENT_VERSION" > "$CWF_VERSION_FILE"
+echo ""
 echo "✅ Đã lưu version: $CURRENT_VERSION"
 
-# 6. Create Global Rules file
-cat > "$CURSOR_RULES_DIR/cwf-global.mdc" << 'EOF'
----
-description: CWF - Cursor Workflow Framework
-globs: 
-alwaysApply: true
----
+# 6. Create cwf-init script
+echo ""
+echo "🔧 Bước 5: Tạo script cwf-init..."
 
+cat > "$CWF_GLOBAL/cwf-init" << 'CWFINIT'
+#!/bin/bash
+# CWF Init - Kích hoạt CWF trong project hiện tại
+
+CWF_GLOBAL="$HOME/.cursor/cwf/workflows"
+PROJECT_RULES="./.cursor/rules"
+
+echo ""
+echo "🚀 CWF Init - Kích hoạt workflows cho project này"
+echo ""
+
+# Check if CWF is installed
+if [ ! -d "$CWF_GLOBAL" ]; then
+    echo "❌ CWF chưa được cài đặt. Chạy install.sh trước!"
+    exit 1
+fi
+
+# Create .cursor/rules folder
+mkdir -p "$PROJECT_RULES"
+echo "📂 Đã tạo: $PROJECT_RULES"
+
+# Copy workflows to project
+echo "📝 Đang copy workflows..."
+copied=0
+for file in "$CWF_GLOBAL"/*.md; do
+    if [ -f "$file" ]; then
+        cp "$file" "$PROJECT_RULES/"
+        echo "   ✅ $(basename $file)"
+        ((copied++))
+    fi
+done
+
+# Create main .cursorrules file
+cat > "./.cursorrules" << 'CURSORRULES'
 # CWF - Cursor Workflow Framework
 
-## CRITICAL: Command Recognition
-Khi user gõ các lệnh bắt đầu bằng `/` dưới đây, đây là CWF WORKFLOW COMMANDS (không phải file path).
-Bạn PHẢI đọc file workflow tương ứng và thực hiện theo hướng dẫn trong đó.
+Bạn có quyền truy cập các workflows trong thư mục .cursor/rules/
+Khi user gõ lệnh bắt đầu bằng /, hãy đọc file workflow tương ứng và thực hiện.
 
-## Command Mapping (QUAN TRỌNG):
-| Command | Workflow File | Mô tả |
-|---------|--------------|-------|
-| `/brainstorm` | ~/.cursor/rules/cwf/brainstorm.md | 💡 Bàn ý tưởng, research thị trường |
-| `/plan` | ~/.cursor/rules/cwf/plan.md | Thiết kế tính năng |
-| `/code` | ~/.cursor/rules/cwf/code.md | Viết code an toàn |
-| `/visualize` | ~/.cursor/rules/cwf/visualize.md | Tạo UI/UX |
-| `/debug` | ~/.cursor/rules/cwf/debug.md | Sửa lỗi sâu |
-| `/test` | ~/.cursor/rules/cwf/test.md | Kiểm thử |
-| `/run` | ~/.cursor/rules/cwf/run.md | Chạy ứng dụng |
-| `/deploy` | ~/.cursor/rules/cwf/deploy.md | Deploy production |
-| `/init` | ~/.cursor/rules/cwf/init.md | Khởi tạo dự án |
-| `/recap` | ~/.cursor/rules/cwf/recap.md | Khôi phục ngữ cảnh |
-| `/next` | ~/.cursor/rules/cwf/next.md | Gợi ý bước tiếp theo |
-| `/customize` | ~/.cursor/rules/cwf/customize.md | ⚙️ Cá nhân hóa AI |
-| `/save-brain` | ~/.cursor/rules/cwf/save_brain.md | Lưu kiến thức |
-| `/audit` | ~/.cursor/rules/cwf/audit.md | Kiểm tra bảo mật |
-| `/refactor` | ~/.cursor/rules/cwf/refactor.md | Tái cấu trúc code |
-| `/rollback` | ~/.cursor/rules/cwf/rollback.md | Rollback deployment |
-| `/cloudflare-tunnel` | ~/.cursor/rules/cwf/cloudflare-tunnel.md | Quản lý tunnel |
-| `/cwf-update` | ~/.cursor/rules/cwf/cwf-update.md | Cập nhật CWF |
+## Command Mapping:
+| Lệnh | File |
+|------|------|
+| /brainstorm | @brainstorm.md |
+| /plan | @plan.md |
+| /code | @code.md |
+| /visualize | @visualize.md |
+| /debug | @debug.md |
+| /test | @test.md |
+| /run | @run.md |
+| /deploy | @deploy.md |
+| /init | @init.md |
+| /recap | @recap.md |
+| /next | @next.md |
+| /save-brain | @save_brain.md |
+| /audit | @audit.md |
+| /refactor | @refactor.md |
+| /rollback | @rollback.md |
+| /customize | @customize.md |
+| /cwf-update | @cwf-update.md |
 
-## Resource Locations:
-- Schemas: ~/.cursor/schemas/
-- Templates: ~/.cursor/templates/
+## Cách thực hiện:
+1. Khi user gõ /command, tìm file tương ứng trong .cursor/rules/
+2. Đọc và thực hiện TỪNG BƯỚC trong workflow
+3. Không bỏ qua bước nào
+CURSORRULES
 
-## Hướng dẫn thực hiện:
-1. Khi user gõ một trong các commands trên, ĐỌC FILE WORKFLOW tương ứng
-2. Thực hiện TỪNG GIAI ĐOẠN trong workflow
-3. KHÔNG tự ý bỏ qua bước nào
-4. Kết thúc bằng NEXT STEPS menu như trong workflow
-
-## Update Check:
-- CWF version: ~/.cursor/cwf_version
-- Update command: /cwf-update
-EOF
-
-echo "✅ Đã tạo Global Rules (cwf-global.mdc)"
+echo ""
+echo "✅ Đã tạo .cursorrules"
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🎉 HOÀN TẤT! Đã cài $success files vào hệ thống."
+echo "🎉 HOÀN TẤT! Đã kích hoạt CWF cho project này."
+echo ""
+echo "📂 Workflows: $PROJECT_RULES ($copied files)"
+echo ""
+echo "👉 Restart Cursor và thử gõ: /plan hoặc /brainstorm"
+echo "👉 Hoặc dùng @ để reference: @plan.md"
+echo ""
+CWFINIT
+
+chmod +x "$CWF_GLOBAL/cwf-init"
+echo "   ✅ cwf-init"
+
+# 7. Add to PATH
+echo ""
+echo "🔧 Bước 6: Thêm vào PATH..."
+
+# Detect shell config file
+if [ -f "$HOME/.zshrc" ]; then
+    SHELL_CONFIG="$HOME/.zshrc"
+elif [ -f "$HOME/.bashrc" ]; then
+    SHELL_CONFIG="$HOME/.bashrc"
+else
+    SHELL_CONFIG="$HOME/.profile"
+fi
+
+# Add to PATH if not already there
+if ! grep -q "\.cursor/cwf" "$SHELL_CONFIG" 2>/dev/null; then
+    echo "" >> "$SHELL_CONFIG"
+    echo "# CWF - Cursor Workflow Framework" >> "$SHELL_CONFIG"
+    echo 'export PATH="$HOME/.cursor/cwf:$PATH"' >> "$SHELL_CONFIG"
+    echo "   ✅ Đã thêm vào $SHELL_CONFIG"
+else
+    echo "   ✅ Đã có trong PATH"
+fi
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "🎉 CÀI ĐẶT HOÀN TẤT!"
 echo "📦 Version: $CURRENT_VERSION"
 echo ""
-echo "📂 Workflows: $CURSOR_GLOBAL"
-echo "📂 Schemas:   $SCHEMAS_DIR"
-echo "📂 Templates: $TEMPLATES_DIR"
+echo "📂 CWF Global: $CWF_GLOBAL"
 echo ""
-echo "👉 Bạn có thể dùng CWF ở BẤT KỲ project nào ngay lập tức!"
-echo "👉 Thử gõ '/plan' để kiểm tra."
-echo "👉 Kiểm tra update: '/cwf-update'"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "👉 BƯỚC TIẾP THEO:"
+echo "   1. Chạy: source $SHELL_CONFIG (hoặc mở terminal mới)"
+echo "   2. cd vào project của bạn"
+echo "   3. Chạy: cwf-init"
+echo "   4. Restart Cursor"
+echo "   5. Dùng: /plan, /code, /brainstorm, ..."
 echo ""

@@ -4,214 +4,132 @@
 
 *Biến ý tưởng thành App mà không cần biết code. AI lo trọn gói.*
 
-[![Repo gốc](https://img.shields.io/badge/Fork_từ-AWF-orange?style=for-the-badge)](https://github.com/TUAN130294/awf)
-[![Install](https://img.shields.io/badge/Cài_đặt-Global-blue?style=for-the-badge)](#-cài-đặt)
+[![Fork từ AWF](https://img.shields.io/badge/Fork_từ-AWF-orange?style=for-the-badge)](https://github.com/TUAN130294/awf)
 
 ---
 
-## 🛑 Vấn đề khi code với AI
+## 📦 Cài đặt (2 bước)
 
-**Bạn có từng gặp những cảnh này không?**
+### Bước 1: Cài đặt Global
 
-| Vấn đề | Mô tả |
-|--------|-------|
-| 🧠 **Mất trí nhớ** | AI quên cấu trúc Database sau 20 tin nhắn. Tự ý tạo bảng trùng lặp. |
-| 💀 **Code ẩu** | AI đưa code thiếu an toàn, hard-code API Key, bỏ qua các trường hợp lỗi. |
-| 🔄 **Vòng lặp Debug** | Sửa lỗi này đẻ ra lỗi khác. AI sửa mò mà không tìm nguyên nhân gốc rễ. |
-
-👉 **Bạn đang dùng AI như thực tập sinh. Bạn cần phải QUẢN LÝ nó.**
-
----
-
-## ✅ Giải pháp: CWF
-
-**CWF là bộ 17+ lệnh Global cho mọi người - từ người mới đến chuyên gia.**
-
-- 🔧 **Cài 1 lần, dùng mọi dự án**
-- 🧠 **AI không bao giờ quên** (với `/save-brain` và `/recap`)
-- 📋 **Code an toàn** (với `/code` - có security check)
-- 🎯 **Thiết kế trước, code sau** (với `/plan`)
-
----
-
-## 📦 Cài đặt
-
-### 🪟 Windows (PowerShell)
-Mở Terminal trong Cursor (Ctrl + `) và dán:
-
+**🪟 Windows (PowerShell):**
 ```powershell
 iex "& { $(irm https://raw.githubusercontent.com/dl2811/cwf/main/install.ps1) }"
 ```
 
-### 🍎 Mac / Linux (Terminal)
+**🍎 Mac / Linux:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dl2811/cwf/main/install.sh | sh
 ```
 
-> ⚠️ **Khởi động lại Cursor sau khi cài đặt.**
+### Bước 2: Kích hoạt trong Project
 
----
+Mở terminal MỚI, `cd` vào project của bạn và chạy:
 
-## 🎮 Hướng dẫn sử dụng
-
-### 🆕 Dành cho người mới (Vibe Coders)
-
-**Chỉ có ý tưởng? Bắt đầu từ đây:**
-
-```
-/brainstorm → /init → /plan → /visualize → /code → /run → /deploy
+```bash
+cwf-init
 ```
 
-| Bước | Lệnh | Mô tả |
-|------|------|-------|
-| 1 | `/brainstorm` | Bàn ý tưởng, AI hỏi để hiểu bạn muốn gì |
-| 2 | `/init` | Khởi tạo dự án mới |
-| 3 | `/plan` | Thiết kế tính năng chi tiết |
-| 4 | `/visualize` | Tạo giao diện UI/UX |
-| 5 | `/code` | Viết code an toàn |
-| 6 | `/run` | Chạy ứng dụng |
-| 7 | `/deploy` | Đưa lên production |
-
-**Không biết làm gì tiếp?** Gõ `/next`
+> ⚠️ **Restart Cursor** sau khi chạy `cwf-init`
 
 ---
 
-### 💼 Dành cho chuyên gia
+## 🎮 Cách sử dụng
 
-#### 1️⃣ Giai đoạn Lập kế hoạch
-| Lệnh | Mô tả |
-|------|-------|
-| `/init` | Khởi tạo dự án mới với git |
-| `/recap` | Đầu ngày làm việc - AI đọc `.brain` để nhớ lại ngữ cảnh |
-| `/plan` | **QUAN TRỌNG** - Duyệt logic TRƯỚC KHI code |
+Sau khi kích hoạt, gõ lệnh trong Cursor chat:
 
-#### 2️⃣ Giai đoạn Xây dựng
-| Lệnh | Mô tả |
-|------|-------|
-| `/visualize` | Tạo giao diện UI/UX |
-| `/code` | **QUAN TRỌNG** - Code + Unit Test + Security Check |
+```
+/plan Thêm tính năng thanh toán
+```
 
-#### 3️⃣ Giai đoạn Vận hành
-| Lệnh | Mô tả |
-|------|-------|
-| `/debug` | Chế độ "Sherlock Holmes" - Tìm nguyên nhân gốc rễ |
-| `/audit` | Kiểm tra sức khỏe dự án & bảo mật |
-| `/deploy` | Đóng gói lên Production |
+hoặc dùng `@` để reference file:
 
-#### 4️⃣ Bộ nhớ
-| Lệnh | Mô tả |
-|------|-------|
-| `/save-brain` | Lưu toàn bộ kiến thức vào file `.brain` |
-
-> 💡 **Mẹo:** Có thể xóa chat history sau khi `/save-brain`! AI sẽ nhớ lại qua `/recap`.
+```
+@plan.md Thêm tính năng thanh toán
+```
 
 ---
 
-## 📚 Danh sách lệnh đầy đủ
+## 📚 Danh sách lệnh
 
 ### 🌟 Khám phá & Bắt đầu
-| Lệnh | Vai trò | Mô tả |
-|------|---------|-------|
-| `/brainstorm` | Đối tác | 💡 Bàn ý tưởng, nghiên cứu thị trường |
-| `/init` | Founder | ✨ Khởi tạo dự án |
-| `/recap` | Sử gia | 🧠 Nhớ lại context |
-| `/next` | Định hướng | ➡️ Gợi ý bước tiếp theo |
+| Lệnh | Mô tả |
+|------|-------|
+| `/brainstorm` | 💡 Bàn ý tưởng, nghiên cứu thị trường |
+| `/init` | ✨ Khởi tạo dự án |
+| `/recap` | 🧠 Nhớ lại context |
+| `/next` | ➡️ Gợi ý bước tiếp theo |
 
 ### 🎯 Thiết kế & Xây dựng
-| Lệnh | Vai trò | Mô tả |
-|------|---------|-------|
-| `/plan` | Kiến trúc sư | 📝 Thiết kế tính năng |
-| `/visualize` | Designer | 🎨 Tạo UI/UX |
-| `/code` | Senior Dev | � Viết code an toàn |
+| Lệnh | Mô tả |
+|------|-------|
+| `/plan` | 📝 Thiết kế tính năng |
+| `/visualize` | 🎨 Tạo UI/UX |
+| `/code` | 💻 Viết code an toàn |
 
 ### ⚙️ Chạy & Kiểm tra
-| Lệnh | Vai trò | Mô tả |
-|------|---------|-------|
-| `/run` | Operator | ▶️ Chạy ứng dụng |
-| `/test` | QA Engineer | ✅ Kiểm thử |
-| `/debug` | Thám tử | 🐞 Sửa lỗi sâu |
+| Lệnh | Mô tả |
+|------|-------|
+| `/run` | ▶️ Chạy ứng dụng |
+| `/test` | ✅ Kiểm thử |
+| `/debug` | 🐞 Sửa lỗi sâu |
 
 ### 🚀 Triển khai & Bảo trì
-| Lệnh | Vai trò | Mô tả |
-|------|---------|-------|
-| `/deploy` | DevOps | 🚀 Deploy lên server |
-| `/audit` | Bảo mật | 🏥 Kiểm tra bảo mật |
-| `/refactor` | Clean Coder | � Tối ưu code |
-| `/rollback` | Time Traveler | ⏪ Khôi phục code cũ |
+| Lệnh | Mô tả |
+|------|-------|
+| `/deploy` | 🚀 Deploy lên server |
+| `/audit` | 🏥 Kiểm tra bảo mật |
+| `/refactor` | 🧹 Tối ưu code |
+| `/rollback` | ⏪ Khôi phục code cũ |
 
 ### 💾 Bộ nhớ & Tiện ích
-| Lệnh | Vai trò | Mô tả |
-|------|---------|-------|
-| `/save-brain` | Thủ thư | 💾 Lưu kiến thức |
-| `/customize` | Tùy chỉnh | ⚙️ Cá nhân hóa AI |
-| `/cloudflare-tunnel` | Admin | 🌐 Quản lý Tunnel |
-| `/cwf-update` | Updater | 🔄 Cập nhật CWF |
+| Lệnh | Mô tả |
+|------|-------|
+| `/save-brain` | 💾 Lưu kiến thức |
+| `/customize` | ⚙️ Cá nhân hóa AI |
+| `/cwf-update` | 🔄 Cập nhật CWF |
 
 ---
 
-## � Tại sao cần `/brainstorm`?
+## 🔄 Cập nhật
 
-**Vấn đề thường gặp:**
-```
-User: "Làm app quản lý tiệm cà phê"
-AI: *Bắt đầu code ngay* → Thiếu features, code lại nhiều lần
-```
-
-**Với `/brainstorm`:**
-```
-User: "/brainstorm Làm app quản lý tiệm cà phê"
-AI: 
-  - Hỏi để hiểu: "Tiệm có bao nhiêu nhân viên? Cần quản lý gì?"
-  - Nghiên cứu đối thủ (nếu cần)
-  - Đề xuất MVP: "Ưu tiên order, inventory trước. Loyalty sau"
-  - Output: BRIEF.md rõ ràng
-```
-
----
-
-## 🔄 Cập nhật CWF
-
-### Kiểm tra và cập nhật
+### Cập nhật CWF
 ```
 /cwf-update
 ```
 
 ### Sync với upstream AWF
-Khi repo gốc AWF có update mới:
-
-**Windows:**
 ```powershell
-cd C:\path\to\cwf
+# Windows
 .\sync-from-upstream.ps1
-```
 
-**Mac/Linux:**
-```bash
-cd /path/to/cwf
+# Mac/Linux
 ./sync-from-upstream.sh
 ```
 
 ---
 
-## 📁 Vị trí cài đặt
+## 📁 Cấu trúc
 
-| Thành phần | Đường dẫn |
-|------------|-----------|
-| Workflows | `~/.cursor/rules/cwf/` |
-| Schemas | `~/.cursor/schemas/` |
-| Templates | `~/.cursor/templates/` |
-| Global Rules | `~/.cursor/rules/cwf-global.mdc` |
-| Version | `~/.cursor/cwf_version` |
+```
+~/.cursor/cwf/              # Global (cài 1 lần)
+├── workflows/              # Tất cả workflow files
+├── schemas/                # JSON schemas
+├── templates/              # Templates
+├── cwf-init.ps1           # Script kích hoạt (Windows)
+└── cwf-init               # Script kích hoạt (Mac/Linux)
+
+your-project/               # Sau khi chạy cwf-init
+├── .cursor/rules/          # Workflows được copy vào đây
+│   ├── plan.md
+│   ├── code.md
+│   └── ...
+└── .cursorrules            # File rules cho Cursor
+```
 
 ---
 
 ## 🙏 Credits
 
-- **Fork từ:** [AWF - Antigravity Workflow Framework](https://github.com/TUAN130294/awf) by [@TUAN130294](https://github.com/TUAN130294)
+- **Fork từ:** [AWF](https://github.com/TUAN130294/awf) by [@TUAN130294](https://github.com/TUAN130294)
 - **Chuyển đổi cho Cursor:** [@dl2811](https://github.com/dl2811)
-
----
-
-## 📜 License
-
-Giống với repo gốc AWF.
