@@ -1,10 +1,10 @@
-# 🚀 CWF - Cursor Workflow Framework v1.0
+﻿# 🚀 CWF - Cursor Workflow Framework v1.0
 
 **Hệ điều hành dành cho Vibe Coder và Kỹ sư AI - Phiên bản cho Cursor IDE.**
 
 *Biến ý tưởng thành App mà không cần biết code. AI lo trọn gói.*
 
-[![Fork từ AWF](https://img.shields.io/badge/Fork_từ-AWF-orange?style=for-the-badge)](https://github.com/TUAN130294/awf)
+[![Fork từ CWF](https://img.shields.io/badge/Fork_từ-CWF-orange?style=for-the-badge)](https://github.com/TUAN130294/CWF)
 
 ---
 
@@ -98,7 +98,7 @@ hoặc dùng `@` để reference file:
 /cwf-update
 ```
 
-### Sync với upstream AWF
+### Sync với upstream CWF
 ```powershell
 # Windows
 .\sync-from-upstream.ps1
@@ -131,5 +131,6 @@ your-project/               # Sau khi chạy cwf-init
 
 ## 🙏 Credits
 
-- **Fork từ:** [AWF](https://github.com/TUAN130294/awf) by [@TUAN130294](https://github.com/TUAN130294)
+- **Fork từ:** [CWF](https://github.com/TUAN130294/CWF) by [@TUAN130294](https://github.com/TUAN130294)
 - **Chuyển đổi cho Cursor:** [@dl2811](https://github.com/dl2811)
+

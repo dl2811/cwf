@@ -65,7 +65,8 @@ Truy cập: https://github.com/dl2811/cwf/blob/main/CHANGELOG.md
 
 ## ⚠️ LƯU Ý
 
-- CWF là fork của AWF, được điều chỉnh cho Cursor IDE
-- Để sync với upstream AWF, chạy: `.\sync-from-upstream.ps1` (Windows) hoặc `./sync-from-upstream.sh` (Mac/Linux)
+- CWF là fork của CWF, được điều chỉnh cho Cursor IDE
+- Để sync với upstream CWF, chạy: `.\sync-from-upstream.ps1` (Windows) hoặc `./sync-from-upstream.sh` (Mac/Linux)
 - Sau khi update, luôn restart Cursor
+
 
