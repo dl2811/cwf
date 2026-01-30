@@ -1,28 +1,44 @@
-﻿# 🚀 CWF - Cursor Workflow Framework v1.0
+﻿# ⚡ CWF v4.0 - Cursor Workflow Framework
 
-**Hệ điều hành dành cho Vibe Coder và Kỹ sư AI - Phiên bản cho Cursor IDE.**
+> **Framework mở rộng cho Cursor IDE.**
+> Biến AI của bạn thành một đội ngũ chuyên nghiệp (PM, Designer, Coder) với quy trình làm việc chuẩn.
 
-*Biến ý tưởng thành App mà không cần biết code. AI lo trọn gói.*
-
-[![Fork từ CWF](https://img.shields.io/badge/Fork_từ-CWF-orange?style=for-the-badge)](https://github.com/TUAN130294/CWF)
+[![Version](https://img.shields.io/badge/version-4.0.0-blue.svg)](https://github.com/dl2811/cwf)
+[![Fork từ AWF](https://img.shields.io/badge/Fork_từ-AWF-orange?style=flat-square)](https://github.com/TUAN130294/awf)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
-## 📦 Cài đặt (2 bước)
+## ✨ Tính Năng Chính
 
-### Bước 1: Cài đặt Global
+- 🤖 **Multi-Persona AI**: Đội ngũ AI chuyên biệt (PM, Dev, Designer, QA)
+- 🧠 **Context Vĩnh Cửu**: Tự động lưu và khôi phục session làm việc
+- 📦 **All-in-One**: Không cần cài thêm bất kỳ skill/agent nào khác
+- 🔄 **Auto-Update**: Tự động kiểm tra và cập nhật phiên bản mới
+- 🎯 **Cursor Native**: Tối ưu cho Cursor IDE với .cursorrules
+
+---
+
+## 🚀 Cài Đặt (2 Bước)
+
+### Bước 1: Cài Đặt Global
 
 **🪟 Windows (PowerShell):**
 ```powershell
-iex "& { $(irm https://raw.githubusercontent.com/dl2811/cwf/main/install.ps1) }"
+irm https://raw.githubusercontent.com/dl2811/cwf/main/install.ps1 | iex
 ```
 
-**🍎 Mac / Linux:**
+**🍎 macOS / Linux:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dl2811/cwf/main/install.sh | sh
 ```
 
-### Bước 2: Kích hoạt trong Project
+> ⚠️ **Windows: Gặp lỗi ExecutionPolicy?** Chạy lệnh này trước:
+> ```powershell
+> Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+
+### Bước 2: Kích Hoạt Trong Project
 
 Mở terminal MỚI, `cd` vào project của bạn và chạy:
 
@@ -34,71 +50,94 @@ cwf-init
 
 ---
 
-## 🎮 Cách sử dụng
+## 🎮 Cách Sử Dụng
 
-Sau khi kích hoạt, gõ lệnh trong Cursor chat:
+Sau khi kích hoạt, gõ lệnh vào khung Chat của Cursor:
 
 ```
-/plan Thêm tính năng thanh toán
+/init
 ```
 
-hoặc dùng `@` để reference file:
+AI sẽ hỏi bạn muốn làm dự án gì và tự động hướng dẫn từng bước.
 
+Hoặc dùng `@` để reference file workflow:
 ```
 @plan.md Thêm tính năng thanh toán
 ```
 
 ---
 
-## 📚 Danh sách lệnh
+## 🗺️ Các Lệnh Chính
 
-### 🌟 Khám phá & Bắt đầu
-| Lệnh | Mô tả |
-|------|-------|
-| `/brainstorm` | 💡 Bàn ý tưởng, nghiên cứu thị trường |
-| `/init` | ✨ Khởi tạo dự án |
-| `/recap` | 🧠 Nhớ lại context |
-| `/next` | ➡️ Gợi ý bước tiếp theo |
+### 🌟 Khám Phá & Bắt Đầu
+| Lệnh | Chức năng | Mô tả |
+|------|-----------|-------|
+| `/init` | 🏁 Khởi động | Bắt đầu dự án mới |
+| `/brainstorm` | 💡 Ý tưởng | Bàn ý tưởng, nghiên cứu thị trường |
+| `/recap` | 🧠 Nhớ lại | Khôi phục context từ session cũ |
+| `/next` | ➡️ Tiếp theo | Gợi ý bước tiếp theo |
 
-### 🎯 Thiết kế & Xây dựng
-| Lệnh | Mô tả |
-|------|-------|
-| `/plan` | 📝 Thiết kế tính năng |
-| `/visualize` | 🎨 Tạo UI/UX |
-| `/code` | 💻 Viết code an toàn |
+### 🎯 Thiết Kế & Xây Dựng
+| Lệnh | Chức năng | Mô tả |
+|------|-----------|-------|
+| `/plan` | 📝 Kế hoạch | AI đóng vai PM, phỏng vấn yêu cầu |
+| `/visualize` | 🎨 Thiết kế | Tạo UI/UX trước khi code |
+| `/code` | 💻 Viết code | AI tự động lập trình theo spec |
 
-### ⚙️ Chạy & Kiểm tra
-| Lệnh | Mô tả |
-|------|-------|
-| `/run` | ▶️ Chạy ứng dụng |
-| `/test` | ✅ Kiểm thử |
-| `/debug` | 🐞 Sửa lỗi sâu |
+### ⚙️ Chạy & Kiểm Tra
+| Lệnh | Chức năng | Mô tả |
+|------|-----------|-------|
+| `/run` | ▶️ Chạy | Khởi động ứng dụng |
+| `/test` | ✅ Kiểm thử | Chạy test cases |
+| `/debug` | 🐛 Sửa lỗi | Phân tích và fix bug tự động |
 
-### 🚀 Triển khai & Bảo trì
-| Lệnh | Mô tả |
-|------|-------|
-| `/deploy` | 🚀 Deploy lên server |
-| `/audit` | 🏥 Kiểm tra bảo mật |
-| `/refactor` | 🧹 Tối ưu code |
-| `/rollback` | ⏪ Khôi phục code cũ |
+### 🚀 Triển Khai & Bảo Trì
+| Lệnh | Chức năng | Mô tả |
+|------|-----------|-------|
+| `/deploy` | 🚀 Deploy | Đẩy lên production |
+| `/audit` | 🏥 Kiểm tra | Kiểm tra bảo mật |
+| `/refactor` | 🧹 Tối ưu | Dọn dẹp và tối ưu code |
+| `/rollback` | ⏪ Rollback | Khôi phục phiên bản cũ |
 
-### 💾 Bộ nhớ & Tiện ích
-| Lệnh | Mô tả |
-|------|-------|
-| `/save-brain` | 💾 Lưu kiến thức |
-| `/customize` | ⚙️ Cá nhân hóa AI |
-| `/cwf-update` | 🔄 Cập nhật CWF |
+### 💾 Bộ Nhớ & Tiện Ích
+| Lệnh | Chức năng | Mô tả |
+|------|-----------|-------|
+| `/save-brain` | 💾 Lưu | Lưu kiến thức dự án |
+| `/customize` | ⚙️ Tùy chỉnh | Cá nhân hóa AI |
+| `/cwf-update` | 🔄 Cập nhật | Kiểm tra và update CWF |
 
 ---
 
-## 🔄 Cập nhật
+## 📂 Cấu Trúc Thư Mục (Sau Cài Đặt)
+
+```
+~/.cursor/cwf/               # Global (cài 1 lần)
+├── workflows/               # Các workflow chính (/init, /plan, /code...)
+├── skills/                  # CWF Skills (auto-activate)
+├── schemas/                 # JSON Schemas
+├── templates/               # Mẫu cấu hình
+├── cwf-init.ps1            # Script kích hoạt (Windows)
+└── cwf-init                 # Script kích hoạt (Mac/Linux)
+
+your-project/                # Sau khi chạy cwf-init
+├── .cursor/rules/           # Workflows được copy vào đây
+│   ├── plan.md
+│   ├── code.md
+│   └── ...
+└── .cursorrules             # File rules cho Cursor
+```
+
+---
+
+## 🔄 Cập Nhật
 
 ### Cập nhật CWF
+Gõ trong Cursor chat:
 ```
 /cwf-update
 ```
 
-### Sync với upstream CWF
+### Sync với upstream AWF (Dành cho Maintainer)
 ```powershell
 # Windows
 .\sync-from-upstream.ps1
@@ -109,28 +148,24 @@ hoặc dùng `@` để reference file:
 
 ---
 
-## 📁 Cấu trúc
+## 📜 Changelog
 
-```
-~/.cursor/cwf/              # Global (cài 1 lần)
-├── workflows/              # Tất cả workflow files
-├── schemas/                # JSON schemas
-├── templates/              # Templates
-├── cwf-init.ps1           # Script kích hoạt (Windows)
-└── cwf-init               # Script kích hoạt (Mac/Linux)
+### v4.0.0 (Latest)
+- 🆕 **Skill System**: awf-session-restore, awf-error-translator, awf-adaptive-language
+- 🆕 **Schemas & Templates**: Cấu trúc dữ liệu chuẩn
+- 🆕 **Multi-Persona AI**: Đội ngũ AI chuyên biệt
+- ✅ Sync từ AWF v4.0
 
-your-project/               # Sau khi chạy cwf-init
-├── .cursor/rules/          # Workflows được copy vào đây
-│   ├── plan.md
-│   ├── code.md
-│   └── ...
-└── .cursorrules            # File rules cho Cursor
-```
+### v1.0.0
+- 🎉 Initial release - Fork từ AWF cho Cursor IDE
 
 ---
 
 ## 🙏 Credits
 
-- **Fork từ:** [CWF](https://github.com/TUAN130294/CWF) by [@TUAN130294](https://github.com/TUAN130294)
+- **Fork từ:** [AWF](https://github.com/TUAN130294/awf) by [@TUAN130294](https://github.com/TUAN130294)
 - **Chuyển đổi cho Cursor:** [@dl2811](https://github.com/dl2811)
 
+---
+
+**Happy Vibe Coding!** 🚀
